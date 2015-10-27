@@ -1,3 +1,33 @@
+## ChatterUp! 
+
+ChatterUp is a small web application developed with AngularJS, Bootstrap, PubNub, and Laravel.
+Laravel is only used to serve as a local host for the app with its route file redirecting to /public/views/index.html.
+
+ChatterUp! contains views, directives, controller, and a service for retrieving usernames of fake users from http://jsonplaceholder.typicode.com/users which will be used for faking past messages in the application.
+
+Avatars which can be selected when choosing and alias are free to use, retrieved from www.iconfinder.com, and created by Anna Litviniuk - https://www.iconfinder.com/Naf_Naf 
+
+Folder structure is as follows:
+
+public
+- controllers
+- css
+- directives
+- img
+- js
+- packages
+- services
+- views
+
+
+### PubNub
+
+PubNub is a secure global Data Stream Network (DSN) and easy to use API that enables our customers to connect, scale, and manage realtime applications and IoT devices. With over 70 SDKs for every platform, 250ms worldwide data transfer times, and scalability for hundreds of millions of devices, PubNub’s unique infrastructure gives you the ability to easily connect and operate world-class realtime applications and IoT devices.
+
+http://pubnub.com
+
+
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
