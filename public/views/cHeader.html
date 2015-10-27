@@ -1,0 +1,28 @@
+<div>
+    <img src="/img/ChatterUp.png" class="img-responsive" alt="Chatter Up!">
+    <div ng-show="connectionState == 0" class="header-alert">
+            <div class="alert alert-danger" ng-hide="alert">
+                <a ng-href="#" ng-click="hideMe()" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                You are disconnected!
+            </div>
+        </div>
+    <div ng-show="connectionState == 1" class="header-alert">
+        <div class="alert alert-warning" ng-hide="alert">
+            <a ng-href="#" ng-click="hideMe()" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Trying to connect
+        </div>
+    </div>
+    <div ng-show="connectionState == 2" class="header-alert">
+        <div class="alert alert-info"  ng-hide="alert">
+            <a ng-href="#" ng-click="hideMe()" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            You are currently connected!
+        </div>
+    </div>
+    <div ng-show="loggedIn" class="logoutBtn" id="logout">
+        <span ng-click="tryLogout()"><input class="btn btn-primary" type="submit" value="Logout"></span>
+    </div>
+</div>
+<p>&nbsp;</p>
+<div ng-show="errorMsg">
+    <notification error="errorMsg"></notification>
+</div>

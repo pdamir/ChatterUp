@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chatter Up!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../css/bootstrap-responsive.min.css" type="text/css" media="screen">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <script src="../js/modernizr-2.6.2.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="http://cdn.pubnub.com/pubnub-3.7.15.min.js"></script>
+    <script src="../controllers/chatController.js"></script>
+    <script src="../directives/messages.js"></script>
+    <script src="../services/fakeUsers.js"></script>
+
+</head>
+<body ng-app="ChatterUp">
+<div class="container-fluid" ng-controller="chatController">
+    <div class="chatterContainer" ng-include="'/views/cHeader.html'"></div>
+
+    <!--IF USER IS NOT LOGGED IN, DIV ELEMENT BELOW WILL APPEAR
+        WHERE USER SELECTS USERNAME AND AVATAR -->
+    <div ng-Show="!loggedIn" id="login">
+        <h3>Enter an alias</h3>
+        <label>
+            <input type="text" ng-model="message.username"/>
+        </label>
+
+        <div class="row avatars">
+            <label>Choose an avatar:</label>
+            <label ng-repeat="singleAvatar in allAvatars">
+                <input type="radio" name="avatarPic" value="{{singleAvatar.path}}" ng-model="message.avatar">
+                <img ng-src="{{singleAvatar.path}}" height="48" width="48">
+            </label>
+        </div>
+        <br>
+        <span ng-click="tryLogin()">
+            <input class="btn btn-primary" type="submit" value="Proceed to chat">
+        </span>
+    </div>
+
+    <!--IF USER IS LOGGED IN, DIV ELEMENT BELOW WILL APPEAR
+        WHERE USER IS PROMPTED WITH CHATBOX -->
+    <div class="container" ng-Show="loggedIn" id="chat">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Chat
+                        <div class="btn-group pull-right">
+                            There are currently {{presence}} users online.
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="chat">
+                            <li ng-class="liClass(chat)" ng-repeat="chat in chatMessages" ng-show="showItem(chat)">
+                                <div ng-if="leftRight(chat, 'left')">
+                                    <message-left msg="chat"></message-left>
+                                </div>
+
+                                <div ng-if="leftRight(chat, 'right')">
+                                    <message-right msg="chat"></message-right>
+                                </div>
+
+                            </li>
+                        </ul>
+
+                        <!-- HERE I HAVE CREATED UL TO IMITATE PAST MESSAGES FROM FAKE USERS;
+                        FOR EXAMPLE, THEY HAVE WRITTEN THEIR EMAILS -->
+                        <ul class="chat">
+                            <li class="right clearfix" ng-repeat="fake in fakeUsers">
+                                <div>
+                                <span class="chat-img pull-right">
+                                    <img ng-src="{{defaultAvatar}}" alt="User Avatar" class="img-circle" height="48"
+                                         width="48"/>
+                                </span>
+
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <small class=" msgTime text-muted">{{ yesterdayDate() | date }}</small>
+                                            <strong class="pull-right primary-font">{{fake.name}}</strong>
+                                        </div>
+                                        <p class="pull-right">
+                                            {{fake.email}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                    <div class="panel-footer">
+
+                        <form class="" ng-Show="loggedIn" ui-keypress="{13:'sendMessage()'}">
+                            <div class="input-group">
+                                <input id="btn-input" type="text" class="form-control input-sm"
+                                       placeholder="Type your message here..." ng-model="message.text"/>
+                                <span class="input-group-btn" ng-click="sendMessage()">
+                                    <input class="btn btn-warning btn-sm" type="submit" id="btn-chat" value="Send">
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
